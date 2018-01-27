@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "195939986831",
+    "firebase_url": "https://uper-88af4.firebaseio.com",
+    "project_id": "uper-88af4",
+    "storage_bucket": "uper-88af4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:195939986831:android:6e375eed3831e2cf",
+        "android_client_info": {
+          "package_name": "com.example.gihan.uper"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "195939986831-p7rkjd1g0cdser8p5b806huufocc81ol.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDzapxegForoT--Gh_-ApNHPAkTdFXi0Ak"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

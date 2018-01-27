@@ -1,3 +1,26 @@
 <resources>
     <string name="app_name">Uper</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="first_fragment_title_uper">U P E R</string>
+    <string name="looking_for_rider_app">Looking For rider App</string>
+    <string name="regester">Regester</string>
+    <string name="sign_in">SIGN IN</string>
+    <string name="phone">Phone</string>
+    <string name="name">Name</string>
+    <string name="password">Password</string>
+    <string name="email">Email</string>
+
+    <string name="first_fragment_regester" type="id">Regester</string>
+    <string name="first_fragment_message" type="id">Please use email to regester</string>
+    <string name="first_fragment_snackbar_email" type="id">Please enter email</string>
+    <string name="first_fragment_snackbar_password" type="id">" Please enter password "</string>
+    <string name="first_fragment_snackbar_name" type="id">" Please enter name "</string>
+    <string name="first_fragment_snackbar_password_length" type="id">" Password too short !!!"</string>
+    <string name="first_fragment_snackbar_sucessfully_regester" type="id">" Sucessfully Regester
+        !!!"
+    </string>
+    <string name="first_fragment_sign_in" type="id">Sign In</string>
+    <string name="first_fragment_message_sign_in" type="id">Please use email to sign in</string>
 </resources>
