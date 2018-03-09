@@ -22,11 +22,9 @@ public class MainActivity extends AppCompatActivity {
 
         //FOR APPLY FONT
         CalligraphyConfig.initDefault(new CalligraphyConfig.Builder().setDefaultFontPath("fonts/Arkhip_font.ttf").setFontAttrId(R.attr.fontPath).build());
-
         setContentView(R.layout.activity_main);
 
         //TO PUT FRAGMENT ON ACTIVITY
-
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.main_activity, new firstFragment())

@@ -23,4 +23,5 @@
     </string>
     <string name="first_fragment_sign_in" type="id">Sign In</string>
     <string name="first_fragment_message_sign_in" type="id">Please use email to sign in</string>
+    <string name="title_activity_welcome_map">Map</string>
 </resources>

@@ -17,7 +17,7 @@ import android.widget.RelativeLayout;
 
 import com.example.gihan.uper.R;
 import com.example.gihan.uper.modle.User;
-import com.example.gihan.uper.ui.WelcomeActivity;
+import com.example.gihan.uper.ui.WelcomeMapActivity;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.AuthResult;
@@ -25,6 +25,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.rengwuxian.materialedittext.MaterialEditText;
+
+import dmax.dialog.SpotsDialog;
 
 
 public class firstFragment extends Fragment {
@@ -57,6 +59,7 @@ public class firstFragment extends Fragment {
             public void onClick(View v) {
                 showLoginDialog();
 
+
             }
 
 
@@ -78,6 +81,7 @@ public class firstFragment extends Fragment {
         final AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle(getString(R.string.first_fragment_regester));
         builder.setMessage(getString(R.string.first_fragment_message));
+
 
         LayoutInflater inflater = LayoutInflater.from(getContext());
         View regester_layout = inflater.inflate(R.layout.layout_regester, null);
@@ -123,46 +127,44 @@ public class firstFragment extends Fragment {
 
                 try {
 
-                //REGESTER NEW USER
-                mAuth.createUserWithEmailAndPassword(etEmail.getText().toString(), etPassword.getText().toString())
-                        .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-                            @Override
-                            public void onSuccess(AuthResult authResult) {
+                    //REGESTER NEW USER
+                    mAuth.createUserWithEmailAndPassword(etEmail.getText().toString(), etPassword.getText().toString())
+                            .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
+                                @Override
+                                public void onSuccess(AuthResult authResult) {
 
-                                //SAVE USER DATA IN DATABASE
-                                User user = new User();
-                                user.setEmail(etEmail.getText().toString());
-                                user.setName(etName.getText().toString());
-                                user.setPassword(etPassword.getText().toString());
-                                user.setPhone(etPhone.getText().toString());
+                                    //SAVE USER DATA IN DATABASE
+                                    User user = new User();
+                                    user.setEmail(etEmail.getText().toString());
+                                    user.setName(etName.getText().toString());
+                                    user.setPassword(etPassword.getText().toString());
+                                    user.setPhone(etPhone.getText().toString());
 
-                                mUser.child(mAuth.getCurrentUser().getUid()).setValue(user).addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void aVoid) {
-                                        Snackbar.make(rootLayout, getString(R.string.first_fragment_snackbar_sucessfully_regester), Snackbar.LENGTH_SHORT).show();
-
-
-                                    }
-                                }).addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Snackbar.make(rootLayout, " failed " + e.getMessage(), Snackbar.LENGTH_LONG).show();
-
-                                    }
-                                });
+                                    mUser.child(mAuth.getCurrentUser().getUid()).setValue(user).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                        @Override
+                                        public void onSuccess(Void aVoid) {
+                                            Snackbar.make(rootLayout, getString(R.string.first_fragment_snackbar_sucessfully_regester), Snackbar.LENGTH_SHORT).show();
 
 
-                            }
-                        }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Snackbar.make(rootLayout, " failed " + e.getMessage(), Snackbar.LENGTH_SHORT).show();
+                                        }
+                                    }).addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            Snackbar.make(rootLayout,  e.toString(), Snackbar.LENGTH_SHORT).show();
+                                        }
+                                    });
 
-                    }
-                });
 
-                }catch (Exception ee){
-                    String dd= ee.toString();
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Snackbar.make(rootLayout,  e.toString(), Snackbar.LENGTH_SHORT).show();
+                        }
+                    });
+
+                } catch (Exception ee) {
+                    String dd = ee.toString();
                 }
             }
 
@@ -188,6 +190,7 @@ public class firstFragment extends Fragment {
         builder.setTitle(getString(R.string.first_fragment_sign_in));
         builder.setMessage(getString(R.string.first_fragment_message_sign_in));
 
+
         LayoutInflater inflater = LayoutInflater.from(getContext());
         View login_layout = inflater.inflate(R.layout.layout_login, null);
 
@@ -201,11 +204,13 @@ public class firstFragment extends Fragment {
         builder.setPositiveButton("Sign In", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
                 dialog.dismiss();
 
-                //Check Validation
+                //DISABLE SIGN IN BUTTON WHEN WORK
+                mLogin.setEnabled(false);
 
+
+                //Check Validation
                 if (TextUtils.isEmpty(etEmail.getText().toString())) {
                     Snackbar.make(rootLayout, getString(R.string.first_fragment_snackbar_email), Snackbar.LENGTH_SHORT).show();
                     return;
@@ -216,25 +221,32 @@ public class firstFragment extends Fragment {
                     return;
                 }
 
+
+                //ALERT DIALOG
+                final AlertDialog waitingDialog = new SpotsDialog(getContext());
+                waitingDialog.show();
+
                 //SIGN IN
-                mAuth.signInWithEmailAndPassword(etEmail.getText().toString(),etPassword.getText().toString())
+                mAuth.signInWithEmailAndPassword(etEmail.getText().toString(), etPassword.getText().toString())
                         .addOnSuccessListener(new OnSuccessListener<AuthResult>() {
                             @Override
                             public void onSuccess(AuthResult authResult) {
-
-                                startActivity(new Intent(getContext(), WelcomeActivity.class));
+                                waitingDialog.dismiss();
+                                startActivity(new Intent(getContext(), WelcomeMapActivity.class));
 
                             }
                         }).addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
 
-                        Snackbar.make(rootLayout," failed"+e.getMessage(),Snackbar.LENGTH_SHORT).show();
+                        waitingDialog.dismiss();
+                        Snackbar.make(rootLayout,  e.toString(), Snackbar.LENGTH_SHORT).show();
+
+                        //ACTIVE SIGN IN BUTTON AFTER FINISH
+                        mLogin.setEnabled(true);
 
                     }
                 });
-
-
 
 
             }

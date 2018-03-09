@@ -6,7 +6,7 @@ package com.example.gihan.uper.modle;
 
 public class User {
 
-    private String email,password,name,phone;
+    private String email, password, name, phone;
 
     public User() {
     }
